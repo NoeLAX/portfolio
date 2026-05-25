@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Ibra Satriatama</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .proj-header {
+    padding: 100px 80px 60px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-header h1 {
+    font-family: var(--mono);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .proj-header p { font-size: 15px; color: var(--text2); max-width: 540px; }
+
+  /* ── CERTS ROW ── */
+  .certs-row {
+    display: flex;
+    gap: 12px;
+    padding: 32px 80px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .cert-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    transition: border-color 0.2s;
+  }
+  .cert-badge:hover { border-color: var(--border2); }
+  .cert-icon { font-size: 20px; }
+  .cert-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .cert-meta { font-family: var(--mono); font-size: 10px; color: var(--text2); }
+
+  /* ── PROJECT CARDS ── */
+  .projects-section { padding: 72px 80px; }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .proj-card {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 0;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+  .proj-card:hover { border-color: var(--border2); }
+  .proj-card.reverse { grid-template-columns: 400px 1fr; }
+  .proj-card.reverse .proj-gallery { order: -1; }
+
+  .proj-body { padding: 36px 40px; display: flex; flex-direction: column; justify-content: center; }
+
+  .proj-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+  }
+
+  .proj-title {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .proj-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 22px;
+  }
+
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 24px;
+  }
+
+  .proj-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+  }
+
+  /* image gallery side */
+  .proj-gallery {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    background: var(--bg3);
+    min-height: 300px;
+  }
+
+  .proj-gallery.single { grid-template-rows: 1fr; }
+  .proj-gallery.three {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+  .proj-gallery.three .proj-img-wrap:first-child {
+    grid-column: 1 / -1;
+    grid-template-columns: none;
+  }
+
+  .proj-img-wrap {
+    overflow: hidden;
+    position: relative;
+    background: var(--bg3);
+  }
+
+  .proj-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+  }
+  .proj-img-wrap:hover img { transform: scale(1.05); }
+
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px; color: var(--text3);
+    min-height: 120px;
+  }
+  .img-placeholder svg { width: 32px; height: 32px; stroke: var(--text3); fill: none; stroke-width: 1; }
+  .img-placeholder p { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-align: center; line-height: 1.5; }
+
+  /* ── CERT PDF MODAL ── */
+  .cert-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cert-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .cert-modal-content {
+    position: relative;
+    width: 95vw;
+    height: 95vh;
+    max-width: 1400px;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    background: var(--bg);
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .cert-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: var(--text);
+    font-size: 40px;
+    cursor: pointer;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border-radius: 50%;
+    z-index: 10;
+  }
+  .cert-modal-close:hover { 
+    background: var(--accent);
+    color: var(--bg);
+    transform: scale(1.1);
+  }
+
+  .cert-pdf-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    background: var(--bg3);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cert-pdf-canvas-container {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: #0f1520;
+  }
+
+  .cert-pdf-canvas-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+  }
+
+  .cert-pdf-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    flex-shrink: 0;
+  }
+
+  .cert-pdf-nav button {
+    background: var(--border);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cert-pdf-nav button:hover:not(:disabled) { 
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+  }
+  .cert-pdf-nav button:disabled { 
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .cert-pdf-info {
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 900px) {
+    .proj-header, .projects-section { padding: 80px 24px 60px; }
+    .certs-row { padding: 24px; }
+    .proj-card, .proj-card.reverse { grid-template-columns: 1fr; }
+    .proj-card.reverse .proj-gallery { order: 0; }
+    .proj-gallery { min-height: 200px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">IBRA SATRIATAMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <div class="proj-header">
+    <div class="section-label reveal">// 03. PROJECTS</div>
+    <h1 class="reveal">Projects & Certifications</h1>
+    <p class="reveal">Engineering projects from thesis, independent research, to industrial training final projects.</p>
+  </div>
+
+  <!-- CERTS ROW -->
+  <div class="certs-row">
+    <div class="cert-badge reveal" data-pdf="images/cswp.pdf" style="cursor: pointer;">
+      <div class="cert-icon">🏆</div>
+      <div class="cert-info">
+        <div class="cert-name">CSWP – Sheet Metal</div>
+        <div class="cert-meta">Dassault Systèmes · JAN 2025</div>
+      </div>
+    </div>
+    <div class="cert-badge reveal" data-pdf="images/autodesk.pdf" style="cursor: pointer;">
+      <div class="cert-icon">⚙️</div>
+      <div class="cert-info">
+        <div class="cert-name">AutoCAD, Inventor & Vault 2025</div>
+        <div class="cert-meta">PT INKA (Persero) · OKT 2025</div>
+      </div>
+    </div>
+    <div class="cert-badge reveal" data-pdf="images/msib.pdf" style="cursor: pointer;">
+      <div class="cert-icon">📐</div>
+      <div class="cert-info">
+        <div class="cert-name">SolidWorks · AutoCAD · Inventor</div>
+        <div class="cert-meta">Neosia Training Centre · DES 2024</div>
+      </div>
+    </div>
+    <div class="cert-badge reveal" data-pdf="images/toefl.pdf" style="cursor: pointer;">
+      <div class="cert-icon">🌐</div>
+      <div class="cert-info">
+        <div class="cert-name">TOEFL ITP – Score 533</div>
+        <div class="cert-meta">Intermediate · English Proficiency</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="projects-section">
+    <div class="projects-list">
+
+      <!-- PROJECT 1 -->
+      <div class="proj-card reveal">
+        <div class="proj-body">
+          <div class="proj-num">PROJECT_01 · THESIS</div>
+          <div class="proj-title">Battery Management System (BMS) with Buck–Boost Converter & PID Control </div>
+          <p class="proj-desc">
+            A Battery Management System (BMS) integrated with a PID-controlled Buck–Boost Converter, designed to 
+            maintain stable output voltage across buck and boost modes, evaluated under open-loop and closed-loop control 
+            for electric vehicle and energy storage applications.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">Arduino IDE</span>
+            <span class="tag">EasyEDA</span>
+            <span class="tag">MATLAB/Simulink</span>
+            <span class="tag">Oscilloscope</span>
+            <span class="tag">PID Control</span>
+            <span class="tag">Buck-Boost</span>
+          </div>
+          <div class="proj-meta">Politeknik Negeri Madiun · 2025 · Thesis / Final Project</div>
+        </div>
+        <div class="proj-gallery">
+          <!--
+            Ganti dengan foto BMS lo:
+            <div class="proj-img-wrap"><img src="images/bms-hardware.jpg" alt="BMS Hardware"></div>
+            <div class="proj-img-wrap"><img src="images/bms-schematic.jpg" alt="BMS Schematic"></div>
+          -->
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/bms1.jpeg"></div>
+            </div>
+          </div>
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/bms2.jpg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="proj-card reverse reveal">
+        <div class="proj-body">
+          <div class="proj-num">PROJECT_02 · RESEARCH</div>
+          <div class="proj-title">SEPIC Converter as Input for 3-Phase Inverter (PI Control)</div>
+          <p class="proj-desc">
+            Growing demand for renewable energy has driven extensive research in power conversion. Conventional step-up 
+            DC converters, however, remain limited in output voltage range and efficiency. DC-DC converter technology 
+            addresses this gap by enabling flexible voltage conversion across DC levels, making high step-up capability with 
+            maintained efficiency critical for electric vehicle and renewable energy applications.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">Arduino IDE</span>
+            <span class="tag">EasyEDA</span>
+            <span class="tag">MATLAB</span>
+            <span class="tag">PI Control</span>
+            <span class="tag">Power Electronics</span>
+            <span class="tag">SEPIC</span>
+          </div>
+          <div class="proj-meta">Politeknik Negeri Madiun · 2024 · Research Project</div>
+        </div>
+        <div class="proj-gallery">
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/sepic1.jpeg"></div>
+            </div>
+          </div>
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/sepic2.jpg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="proj-card reveal">
+        <div class="proj-body">
+          <div class="proj-num">PROJECT_03 · NEOSIA FINAL PROJECT</div>
+          <div class="proj-title">Hydraulic Press Machine for Industrial Waste Processing</div>
+          <p class="proj-desc">
+            Designed and tested a hydraulic press machine including structural analysis and full manufacturing drawings using 
+            SolidWorks and AutoCAD Mechanical.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">SolidWorks</span>
+            <span class="tag">AutoCAD Mechanical</span>
+            <span class="tag">Autodesk Inventor</span>
+            <span class="tag">Structural Analysis</span>
+            <span class="tag">Manufacturing Drawing</span>
+          </div>
+          <div class="proj-meta">Neosia Training Center · DES 2024 · MSIB Batch 7</div>
+        </div>
+        <div class="proj-gallery">
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/neosia 1.jpeg"></div>
+            </div>
+          </div>
+          <div class="proj-img-wrap">
+            <div class="img-placeholder">
+              <div class="proj-img-wrap"><img src="images/neosia 2.jpeg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- CERTIFICATE PDF MODAL -->
+<div id="certModal" class="cert-modal">
+  <div class="cert-modal-content">
+    <button class="cert-modal-close" id="certModalClose">&times;</button>
+    <div class="cert-pdf-viewer">
+      <div class="cert-pdf-canvas-container" id="certPdfCanvasContainer"></div>
+      <div class="cert-pdf-nav">
+        <button id="certPdfPrevBtn">← Previous</button>
+        <div class="cert-pdf-info">
+          <span id="certPdfCurrentPage">1</span> / <span id="certPdfTotalPages">1</span>
+        </div>
+        <button id="certPdfNextBtn">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

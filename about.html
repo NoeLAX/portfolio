@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Ibra Satriatama</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ───────── HERO ───────── */
+.about-hero {
+  padding: 40px 64px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) 320px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 56px;
+}
+
+/* ───────── TEXT ───────── */
+.about-hero-text .page-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+.about-hero-text h1 {
+  font-family: var(--mono);
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 1.05;
+  font-weight: 700;
+  margin-bottom: 28px;
+  letter-spacing: -0.03em;
+}
+
+.about-hero-text p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text2);
+  max-width: 620px;
+}
+
+/* ───────── PHOTO ───────── */
+.about-photo-wrap {
+  width: 100%;
+  max-width: 320px;
+  justify-self: end;
+}
+
+.about-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 500px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.02),
+    rgba(255,255,255,0.01)
+  );
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ───────── PLACEHOLDER ───────── */
+.photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--text3);
+}
+
+.photo-placeholder svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--text3);
+  fill: none;
+  stroke-width: 1;
+}
+
+.photo-placeholder p {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+/* ───────── RESPONSIVE ───────── */
+@media (max-width: 980px) {
+
+  .about-hero {
+    padding: 110px 28px 42px;
+  }
+
+  .about-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .about-photo-wrap {
+    max-width: 280px;
+    justify-self: start;
+  }
+
+  .about-hero-text h1 {
+    font-size: 48px;
+  }
+
+  .about-hero-text p {
+    max-width: 100%;
+  }
+}
+  /* ── BIO SECTION ── */
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .bio-text p { font-size: 15px; color: var(--text2); line-height: 1.85; }
+  .bio-text p + p { margin-top: 16px; }
+
+  .bio-text blockquote {
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+    margin: 24px 0;
+    font-style: italic;
+    color: var(--text);
+    font-size: 15px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-block { display: flex; flex-direction: column; gap: 28px; }
+
+  .skill-category {}
+  .skill-cat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .skills-header {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .skill-pill:hover {
+    border-color: var(--border2);
+    color: var(--accent);
+    background: rgba(0,212,170,0.06);
+  }
+
+  /* ── EDUCATION ── */
+  .edu-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    margin: 48px auto 0;
+  }
+  .edu-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .edu-school { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); }
+  .edu-degree { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .edu-gpa {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .edu-period { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 14px; }
+  .edu-thesis { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .edu-thesis span { color: var(--text); font-style: italic; }
+
+  .bg-alt { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  @media (max-width: 900px) {
+    .about-hero-inner { grid-template-columns: 1fr; }
+    .about-photo-wrap { max-width: 240px; }
+    .bio-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-hero { padding: 90px 24px 0; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">IBRA SATRIATAMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER + PHOTO -->
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div class="about-hero-text reveal">
+        <div class="page-tag">// 01. ABOUT</div>
+        <h1>SUMMARY</h1>
+        <p>
+          Electrical Design Engineer with experience in railway electrical system development through projects at PT INKA 
+          (Persero). Skilled in electrical schematic design, panel layout development, and 3D cable routing using AutoCAD and 
+          Autodesk Inventor for rolling stock applications. Experienced in power electronics, PLC/Arduino-based control systems, 
+          and technical engineering documentation. Strong collaborative and problem-solving abilities with attention to detail in 
+          structured engineering environments.  
+        </p>
+      </div>
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo">
+          <!--
+            CARA PASANG FOTO:
+            Ganti blok di bawah dengan:
+            <img src="images/profile.jpg" alt="Ibra Satriatama">
+          -->
+          <div class="photo-placeholder">
+            <img src="images/profile.jpg" alt="Ibra Satriatama">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIO + SKILLS -->
+<section class="section">
+  <div class="bio-grid">
+
+    <!-- LEFT SIDE -->
+    <div class="bio-text reveal">
+      <h1>EDUCATION</h1>
+      <div class="edu-card">
+        <div class="edu-card-top">
+          <div>
+            <div class="edu-school">POLITEKNIK NEGERI MADIUN</div>
+            <div class="edu-degree">D4 Rollingstock Engineering</div>
+            <div class="edu-period">AGU 2021 – AGU 2025</div>
+          </div>
+          <div class="edu-gpa">IPK 3.67/4.00</div>
+        </div>
+
+        <div class="edu-thesis">
+          Thesis:
+          <span>
+            Desain dan Pengembangan Battery Management System berbasis PID Control
+            dengan Buck-Boost Converter untuk Optimasi Performa Baterai.
+          </span>
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-card-top">
+          <div>
+            <div class="edu-school">SMA NEGERI 1 DOLOPO</div>
+            <div class="edu-degree">MIPA</div>
+            <div class="edu-period">2019 - 2021</div>
+          </div>
+          <div class="edu-gpa">Nilai 87.87</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="skills-block reveal">
+      <h1>SKILLS</h1>
+      <div class="skill-category">
+        <div class="skill-cat-label">CAD / DESIGN SOFTWARE</div>
+        <div class="skill-pills">
+          <span class="skill-pill">AutoCAD</span>
+          <span class="skill-pill">Autodesk Inventor</span>
+          <span class="skill-pill">SolidWorks</span>
+          <span class="skill-pill">EasyEDA</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-label">CONTROL & PROGRAMMING</div>
+        <div class="skill-pills">
+          <span class="skill-pill">PLC Omron</span>
+          <span class="skill-pill">PLC Siemens</span>
+          <span class="skill-pill">Arduino / C++</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">MATLAB</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-label">TOOLS & PRODUCTIVITY</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Microsoft 365</span>
+          <span class="skill-pill">Autodesk Vault</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-label">LANGUAGE</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Indonesia (Native)</span>
+          <span class="skill-pill">English — TOEFL ITP 533</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

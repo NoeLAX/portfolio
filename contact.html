@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Ibra Satriatama</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .contact-hero {
+    padding: 100px 80px 60px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .contact-hero p { font-size: 15px; color: var(--text2); max-width: 500px; }
+
+  /* ── MAIN GRID ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 72px 80px;
+  }
+
+  /* LEFT: links */
+  .contact-links-col {
+    padding-right: 60px;
+    border-right: 1px solid var(--border);
+  }
+
+  .contact-col-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 28px;
+  }
+
+  .contact-link-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s;
+    group: contact;
+  }
+  .contact-link-item:first-of-type { border-top: 1px solid var(--border); }
+  .contact-link-item:hover .cli-label { color: var(--accent); }
+  .contact-link-item:hover .cli-icon { border-color: var(--border2); background: rgba(0,212,170,0.08); }
+
+  .cli-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .cli-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+
+  .cli-body { flex: 1; }
+  .cli-type { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 3px; }
+  .cli-label { font-size: 14px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+
+  .cli-arrow { color: var(--text3); font-family: var(--mono); font-size: 14px; }
+
+  /* status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.2);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* RIGHT: info */
+  .contact-info-col { padding-left: 60px; }
+
+  .info-block { margin-bottom: 40px; }
+  .info-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+  .info-value { font-size: 15px; color: var(--text); font-weight: 500; }
+  .info-sub { font-size: 13px; color: var(--text2); margin-top: 3px; }
+
+  .divider-h { height: 1px; background: var(--border); margin: 28px 0; }
+
+  /* skills quick list */
+  .quick-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* bottom CTA */
+  .contact-cta {
+    padding: 60px 80px;
+    text-align: center;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+  .contact-cta h2 {
+    font-family: var(--mono);
+    font-size: clamp(20px, 3vw, 30px);
+    margin-bottom: 12px;
+  }
+  .contact-cta p { color: var(--text2); margin-bottom: 28px; }
+
+  @media (max-width: 768px) {
+    .contact-hero, .contact-cta { padding: 80px 24px 48px; }
+    .contact-grid { grid-template-columns: 1fr; padding: 48px 24px; gap: 48px; }
+    .contact-links-col { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
+    .contact-info-col { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">IBRA SATRIATAMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <div class="contact-hero">
+    <div class="section-label reveal">// 04. CONTACT</div>
+    <h1 class="reveal">LET'S CONNECT</h1>
+  </div>
+
+  <div class="contact-grid">
+
+    <!-- LEFT -->
+    <div class="contact-links-col">
+      <div class="contact-col-label reveal">REACH OUT</div>
+
+      <div class="status-badge reveal">
+        <div class="status-dot"></div>
+        OPEN TO WORK
+      </div>
+
+      <a href="mailto:ibrasatria08@gmail.com" class="contact-link-item reveal">
+        <div class="cli-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        </div>
+        <div class="cli-body">
+          <div class="cli-type">EMAIL</div>
+          <div class="cli-label">ibrasatria08@gmail.com</div>
+        </div>
+        <span class="cli-arrow">→</span>
+      </a>
+
+      <a href="https://linkedin.com/in/ibra-satriatama" target="_blank" class="contact-link-item reveal">
+        <div class="cli-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="cli-body">
+          <div class="cli-type">LINKEDIN</div>
+          <div class="cli-label">linkedin.com/in/ibra-satriatama</div>
+        </div>
+        <span class="cli-arrow">→</span>
+      </a>
+
+      <a href="tel:+6285890766594" class="contact-link-item reveal">
+        <div class="cli-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="cli-body">
+          <div class="cli-type">PHONE / WHATSAPP</div>
+          <div class="cli-label">+62 858-9076-6594</div>
+        </div>
+        <span class="cli-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="contact-info-col">
+      <div class="info-block reveal">
+        <div class="info-label">LOCATION</div>
+        <div class="info-value">Madiun, East Java</div>
+        <div class="info-sub">Indonesia · UTC+7</div>
+      </div>
+
+      <div class="info-block reveal">
+        <div class="info-label">EDUCATION</div>
+        <div class="info-value">D4 RollingStock Engineering</div>
+        <div class="info-sub">Politeknik Negeri Madiun · IPK 3.67</div>
+      </div>
+
+      <div class="divider-h"></div>
+
+      <div class="info-block reveal">
+        <div class="info-label">AREA OF EXPERTISE</div>
+        <div class="quick-skills">
+          <span class="tag">Electrical Schematic</span>
+          <span class="tag">Panel Layout</span>
+          <span class="tag">3D Cable Routing</span>
+          <span class="tag">Power Electronics</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">Autodesk Inventor</span>
+          <span class="tag">SolidWorks</span>
+          <span class="tag">PLC Omron/Siemens</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">MATLAB</span>
+        </div>
+      </div>
+
+      <div class="divider-h"></div>
+
+      <div class="info-block reveal">
+        <div class="info-label">LANGUAGES</div>
+        <div class="info-value">Indonesia (Native)</div>
+        <div class="info-sub">English — TOEFL ITP 533 (Advanced)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="contact-cta">
+    <h2 class="reveal">Let's Build Something.</h2>
+    <a href="mailto:ibrasatria08@gmail.com" class="btn btn-primary reveal">SEND EMAIL →</a>
+  </div>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

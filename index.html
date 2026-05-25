@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibra Satriatama — Electrical Design Engineer</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  /* ── INDEX-SPECIFIC ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    align-items: center;
+    padding: 100px 80px 80px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(0,212,170,0.08);
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-name {
+    font-family: var(--mono);
+    font-size: clamp(38px, 5.5vw, 70px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-name span { color: var(--accent); }
+
+  .rotating-text {
+    font-family: var(--mono);
+    font-size: clamp(16px, 2.2vw, 28px);
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 12px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  .rotating-text-content {
+    position: relative;
+    display: inline-block;
+    min-height: 1.4em;
+    vertical-align: middle;
+  }
+
+  .rotating-text-content::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    color: var(--accent);
+    animation: blink 0.8s infinite;
+    font-weight: 700;
+    line-height: 1.4em;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text2);
+    margin-top: 18px;
+    max-width: 520px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    margin-top: 40px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 64px;
+    padding-top: 36px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PROFILE PHOTO CARD ── */
+  .hero-photo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .photo-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg3);
+    position: relative;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .photo-frame:hover img { transform: scale(1.03); }
+
+  /* placeholder shown when no image */
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--text3);
+  }
+  .photo-placeholder svg { width: 48px; height: 48px; stroke: var(--text3); fill: none; stroke-width: 1; }
+  .photo-placeholder p { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; }
+
+  .photo-caption {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* ── CIRCUIT DECO ── */
+  .circuit {
+    position: absolute;
+    bottom: 60px;
+    right: 80px;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── SOCIAL MEDIA ── */
+  .hero-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(0,212,170,0.15);
+    animation: fadeUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .social-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: rgba(0,212,170,0.02);
+  }
+  .social-link:hover {
+    color: var(--accent);
+    background: rgba(0,212,170,0.12);
+    border-color: var(--accent);
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 24px rgba(0,212,170,0.2);
+  }
+  .social-link::before {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 6px 12px;
+    background: rgba(0,212,170,0.15);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+  }
+  .social-link:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-12px);
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(0,212,170,0.05));
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .cv-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,212,170,0.1);
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+  .cv-btn:hover {
+    background: rgba(0,212,170,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,212,170,0.25);
+  }
+  .cv-btn:hover::before {
+    left: 100%;
+  }
+  .cv-btn:active {
+    transform: translateY(0);
+  }
+  
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0,212,170,0.5);
+    transform: scale(0);
+    animation: rippleAnimation 0.6s ease-out;
+    pointer-events: none;
+  }
+  
+  @keyframes rippleAnimation {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* ── CV MODAL ── */
+  .cv-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+  }
+  .cv-modal.active {
+    display: flex;
+  }
+
+  .cv-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, rgba(10,14,20,0.95), rgba(10,14,20,0.85));
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    max-width: 85%;
+    max-height: 95vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0,212,170,0.15);
+  }
+
+  .cv-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(0,212,170,0.1);
+    background: rgba(0,212,170,0.02);
+  }
+  .cv-modal-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .cv-close {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: 32px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+  }
+  .cv-close:hover {
+    color: var(--accent);
+    background: rgba(0,212,170,0.1);
+    transform: rotate(90deg);
+  }
+
+  .cv-modal-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 0;
+  }
+  
+  .pdf-viewer {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 16px 16px 16px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 0;
+    min-height: 0;
+    scroll-behavior: smooth;
+  }
+  
+  .pdf-viewer canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  
+  .pdf-controls {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    border-top: 1px solid rgba(0,212,170,0.2);
+    background: rgba(0,0,0,0.3);
+    width: 100%;
+    flex-shrink: 0;
+  }
+  
+  .pdf-btn {
+    padding: 8px 14px;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .pdf-btn:hover {
+    background: rgba(0,212,170,0.2);
+    border-color: var(--accent);
+  }
+  
+  .pdf-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  #page-info {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.05em;
+  }
+  
+  .cv-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+  }
+  .cv-modal-body p {
+    text-align: center;
+    color: var(--text2);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+    .hero-photo-wrap { max-width: 260px; margin: 0 auto; }
+    .circuit { display: none; }
+  }
+</style>
+</head>
+<body>
+<!-- CV Modal -->
+<div class="cv-modal" id="cvModal">
+  <div class="cv-modal-content">
+    <div class="cv-modal-header">
+      <h2>CURRICULUM VITAE</h2>
+      <button class="cv-close" id="cvClose">&times;</button>
+    </div>
+    <div class="cv-modal-body">
+      <div id="pdf-viewer" class="pdf-viewer"></div>
+      <div class="pdf-controls">
+        <button id="prev-page" class="pdf-btn">← PREV</button>
+        <span id="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+        <button id="next-page" class="pdf-btn">NEXT →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<nav>
+  <a class="nav-logo" href="index.html">IBRA SATRIATAMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <section class="hero">
+    <!-- LEFT: text -->
+    <div>
+      <div class="hero-tag">⚡ ELECTRICAL DESIGN ENGINEER</div>
+      <h1 class="hero-name">IBRA<br><span>SATRIATAMA</span></h1>
+      <div class="rotating-text">
+        <div class="rotating-text-content"></div>
+      </div>
+      <p class="hero-sub">
+        A graduate of Applied Bachelor’s Degree in RollingStock Engineering from Politeknik Negeri Madiun with an educational background in Mechanical and Electrical engineering.
+      </p>
+      <div class="hero-cta">
+        <a href="experience.html" class="btn btn-primary">SEE EXPERIENCE</a>
+        <a href="contact.html" class="btn btn-outline">CONTACT ME</a>
+      </div>
+      <div class="hero-social">
+        <a href="mailto:ibrasatria08@gmail.com" class="social-link" data-label="EMAIL" target="_blank">✉</a>
+        <a href="https://www.linkedin.com/in/ibra-satriatama/" class="social-link" data-label="LINKEDIN" target="_blank">in</a>
+        <a href="https://wa.me/+6285890766594" class="social-link" data-label="WHATSAPP" target="_blank">☎</a>
+        <button class="cv-btn" id="cvBtn">📄 VIEW CV</button>
+      </div>
+      <div class="hero-stats">
+      </div>
+    </div>
+
+    <!-- RIGHT: foto profil -->
+    <div class="hero-photo-wrap">
+      <div class="photo-frame">
+        <!--
+          CARA PASANG FOTO PROFIL:
+          1. Taruh foto lo di folder  images/
+          2. Ganti baris di bawah jadi:
+             <img src="images/nama-foto-lo.jpg" alt="Ibra Satriatama">
+          3. Hapus div.photo-placeholder di bawah ini
+        -->
+        <div class="photo-placeholder">
+          <img src="images/profile.JPG" alt="Ibra Satriatama">
+        </div>
+      </div>
+      <div class="photo-caption">IBRA SATRIATAMA — MADIUN, EAST JAVA</div>
+    </div>
+  </section>
+
+  <!-- circuit bg deco -->
+  <svg class="circuit" width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="60" y="60" width="200" height="200" stroke="#00d4aa" stroke-width="1"/>
+    <rect x="100" y="100" width="120" height="120" stroke="#00d4aa" stroke-width="1"/>
+    <circle cx="160" cy="160" r="24" stroke="#00d4aa" stroke-width="1"/>
+    <line x1="160" y1="60"  x2="160" y2="100" stroke="#00d4aa" stroke-width="1"/>
+    <line x1="160" y1="220" x2="160" y2="260" stroke="#00d4aa" stroke-width="1"/>
+    <line x1="60"  y1="160" x2="100" y2="160" stroke="#00d4aa" stroke-width="1"/>
+    <line x1="220" y1="160" x2="260" y2="160" stroke="#00d4aa" stroke-width="1"/>
+    <circle cx="160" cy="60"  r="4" fill="#00d4aa"/>
+    <circle cx="160" cy="260" r="4" fill="#00d4aa"/>
+    <circle cx="60"  cy="160" r="4" fill="#00d4aa"/>
+    <circle cx="260" cy="160" r="4" fill="#00d4aa"/>
+  </svg>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experience — Ibra Satriatama</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .exp-header-section {
+    padding: 100px 80px 60px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-header-section h1 {
+    font-family: var(--mono);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .exp-header-section p {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 560px;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-wrap {
+    padding: 72px 80px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    bottom: 40px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent) 0%, rgba(0,212,170,0.1) 100%);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 56px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -36px;
+    top: 14px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    z-index: 1;
+    transition: background 0.2s;
+  }
+  .timeline-item:hover .timeline-dot { background: var(--accent); }
+
+  /* card */
+  .exp-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 32px;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: var(--border2); }
+
+  .exp-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .exp-role {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+
+  .exp-loc {
+    font-size: 12px;
+    color: var(--text3);
+    font-family: var(--mono);
+    margin-bottom: 20px;
+  }
+
+  .exp-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .exp-points li {
+    font-size: 14px;
+    color: var(--text2);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .exp-points li::before {
+    content: '//';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    top: 3px;
+  }
+
+  /* work images gallery per experience */
+  .work-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .work-img-frame {
+    aspect-ratio: 16/10;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .work-img-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+  }
+  .work-img-frame:hover img { transform: scale(1.05); }
+
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; color: var(--text3);
+  }
+  .img-placeholder svg { width: 28px; height: 28px; stroke: var(--text3); fill: none; stroke-width: 1; }
+  .img-placeholder p { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; text-align: center; }
+
+  /* type badge */
+  .exp-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+  .exp-type.fulltime { background: rgba(0,212,170,0.1); color: var(--accent); border: 1px solid rgba(0,212,170,0.2); }
+  .exp-type.intern   { background: rgba(0,136,255,0.1); color: #5ab4ff; border: 1px solid rgba(0,136,255,0.2); }
+  .exp-type.study    { background: rgba(255,107,53,0.1); color: #ff9066; border: 1px solid rgba(255,107,53,0.2); }
+
+  /* ── IMAGE MODAL ── */
+  .image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .image-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .image-modal-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .image-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+  .image-modal-close:hover { color: var(--accent); }
+
+  .image-modal-nav {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .image-modal-nav button {
+    background: var(--border);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+  .image-modal-nav button:hover:not(:disabled) { background: var(--accent); color: var(--bg); }
+  .image-modal-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .image-modal-info {
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .exp-header-section, .timeline-wrap { padding-left: 24px; padding-right: 24px; }
+    .timeline { padding-left: 28px; }
+    .work-images { grid-template-columns: 1fr 1fr; }
+    
+    .image-modal-close { top: 16px; right: 16px; background: rgba(0,0,0,0.5); border-radius: 50%; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">IBRA SATRIATAMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <div class="exp-header-section">
+    <div class="section-label reveal">// 02. EXPERIENCE</div>
+    <h1 class="reveal">WORK EXPERIENCE</h1>
+    <p class="reveal">Career journey in the Indonesian railway industry — from internships to becoming an Electrical Design Staff at PT INKA (Persero).</p>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="timeline">
+
+      <!-- 1 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-card-top">
+            <div>
+              <div class="exp-company">PT. INDUSTRI KERETA API (PERSERO)</div>
+              <div class="exp-role">Electrical Design Staff</div>
+              <div class="exp-loc">Madiun, Jawa Timur</div>
+            </div>
+            <span class="exp-period">JAN 2026 – APR 2026</span>
+          </div>
+          <span class="exp-type fulltime">● FULL-TIME</span>
+          <ul class="exp-points">
+            <li>Developing electrical schematics and component layouts for the KRL KCI 8TS project</li>
+            <li>Continuing the development of panel layouts for the KRL KCI 16TS using AutoCAD & Autodesk Inventor Electromechanical</li>
+            <li>Creating integrated panel schematics and component layouts for the KRL KCI 8TS project</li>
+            <li>Finalizing 3D cable routing layouts for the KRL KCI Retrofit Underframe — optimizing space & safety clearances</li>
+            <li>Optimizing modular driver desk layouts to improve maintenance accessibility on the KRL KCI 8TS</li>
+          </ul>
+          <!-- WORK IMAGES — ganti src sesuai nama file di folder images/ -->
+          <div class="work-images">
+            <div class="work-img-frame">
+              <!--
+                Ganti dengan:
+                <img src="images/inka-krl-8ts-schematic.jpg" alt="KRL KCI 8TS Schematic">
+              -->
+              <div class="img-placeholder">
+                <img src="images/inka1.jpg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/inkaa.jpeg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/inka3.jpeg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-card-top">
+            <div>
+              <div class="exp-company">PT INKA MULTI SOLUSI CONSULTING</div>
+              <div class="exp-role">Electrical Design Staff</div>
+              <div class="exp-loc">Madiun, Jawa Timur</div>
+            </div>
+            <span class="exp-period">OKT 2025 – DES 2025</span>
+          </div>
+          <span class="exp-type fulltime">● FULL-TIME</span>
+          <ul class="exp-points">
+            <li>Continuing the development of electrical schematics and component layouts for the KRL KCI Retrofit project</li>
+            <li>Continuing the development of panel layouts for the KRL KCI 16TS using Autodesk Inventor</li>
+            <li>Designing 3D cable routing layouts for the KRL KCI Retrofit Underframe — optimizing space & safety clearances</li>
+            <li>Preparing and verifying BOMs and component specifications for the electrical panels</li>
+            <li>Performing cable size calculations and preparing cable schedules for the power distribution system</li>
+            <li>Managing technical drawings and engineering documentation using Microsoft Excel</li>
+          </ul>
+          <div class="work-images">
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/imsc1.jpg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/imsc4.jpg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/imsc3.jpg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-card-top">
+            <div>
+              <div class="exp-company">PT. INDUSTRI KERETA API (PERSERO)</div>
+              <div class="exp-role">Electrical Design Intern</div>
+              <div class="exp-loc">Madiun, Jawa Timur</div>
+            </div>
+            <span class="exp-period">JAN 2024 – JUN 2024</span>
+          </div>
+          <span class="exp-type intern">● INTERNSHIP</span>
+          <ul class="exp-points">
+            <li>Developing electrical schematics and panel layouts for the braking, auxiliary power, lighting, and control systems</li>
+            <li>Creating component models and 3D assemblies using Autodesk Inventor for visualization and manufacturing processes</li>
+            <li>Designing cable routing systems and preparing technical documentation: cable schedules, wiring diagrams, electrical specifications</li>
+          </ul>
+          <div class="work-images">
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/magang1.jpg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/magang2.jpg">
+              </div>
+            </div>
+            <div class="work-img-frame">
+              <div class="img-placeholder">
+                <img src="images/magang3.jpg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-card-top">
+            <div>
+              <div class="exp-company">NEOSIA TRAINING CENTER</div>
+              <div class="exp-role">MSIB Batch 7 — Industrial Mechanical & Product Design</div>
+              <div class="exp-loc">Remote</div>
+            </div>
+            <span class="exp-period">SEP 2024 – DES 2024</span>
+          </div>
+          <span class="exp-type study">● INDEPENDENT STUDY</span>
+          <ul class="exp-points">
+            <li>Contributing to the design and presentation of a hydraulic press machine for industrial waste processing as a final project</li>
+            <li>Developing 50+ 2D and 3D engineering designs through intensive CAD/CAM/CAE training</li>
+            <li>Completing international certification assessments for Certified SolidWorks Professional (CSWP)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- IMAGE MODAL POPUP -->
+<div id="imageModal" class="image-modal">
+  <div class="image-modal-content">
+    <button class="image-modal-close" id="imageModalClose">&times;</button>
+    <img id="imageModalImg" class="image-modal-img" src="" alt="Full size image">
+    <div class="image-modal-info">
+      <div id="imageModalTitle"></div>
+      <div class="image-modal-nav">
+        <button id="imagePrevBtn">← Previous</button>
+        <span id="imageCounter"></span>
+        <button id="imageNextBtn">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
